@@ -167,9 +167,16 @@ if ($action === 'events') {
     // ── 3. Trainer Bookings ─────────────────────────────────────────────────────
     try {
         if ($role === 'trainer') {
-            // The user requested to ONLY show Holiday, Event, and Reminder on the trainer calendar.
-            // Bookings are managed in 'My Sessions' and 'Availability'.
-            $bkStmt = null;
+            $bkStmt = $pdo->prepare("
+                SELECT tb.*, u.full_name AS client_name, u.profile_photo
+                FROM trainer_bookings tb
+                JOIN users u ON tb.user_id = u.user_id
+                WHERE tb.trainer_id = ? AND tb.session_date BETWEEN ? AND ?
+                AND tb.session_date >= CURDATE()
+                AND tb.status != 'cancelled'
+                ORDER BY tb.session_date, tb.start_time
+            ");
+            $bkStmt->execute([$uid, $start, $end]);
         } elseif ($role === 'client') {
             $bkStmt = $pdo->prepare("
                 SELECT tb.*, t.full_name AS trainer_name, t.photo AS trainer_photo

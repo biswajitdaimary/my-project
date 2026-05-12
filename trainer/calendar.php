@@ -417,6 +417,7 @@ const TYPE_COLORS = {
   gym_event:    { bg:'#fff7ed', text:'#FF6B35', label:'Gym Event',    icon:'fa-dumbbell' },
   reminder:     { bg:'#f5f3ff', text:'#8b5cf6', label:'Reminder',     icon:'fa-bell' },
   announcement: { bg:'#fffbeb', text:'#f59e0b', label:'Announcement', icon:'fa-bullhorn' },
+  booking:      { bg:'#f0f9ff', text:'#0ea5e9', label:'Session',      icon:'fa-user-clock' },
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -544,8 +545,7 @@ function loadReminders() {
       }
       
       if (!data.success || !data.reminders || data.reminders.length === 0) {
-        // Display exactly what the API returned for debugging
-        box.innerHTML = '<div class="empty-state"><i class="fa-regular fa-bell-slash"></i> Debug: ' + esc(JSON.stringify(data)) + '</div>';
+        box.innerHTML = '<div class="empty-state"><i class="fa-regular fa-bell-slash"></i> No upcoming reminders</div>';
         return;
       }
       const now = Date.now();

@@ -310,85 +310,78 @@ input:checked+.qt-slider:before{transform:translateX(14px);}
 .dv-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem;}
 .dv-date-label{font-size:1.15rem;font-weight:800;color:#1e293b;}
 .dv-subtitle{font-size:.8rem;color:#64748b;margin-top:.15rem;}
-.dv-timeline{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(148px,1fr));
-  gap:.75rem;
+/* ── Day View Slot Redesign ──────────────── */
+.dv-timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
 }
-/* ── Slot Card ───────────────── */
-.dv-slot{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-  gap:.45rem;
-  background:#fff;
-  border:1.5px solid #e8edf4;
-  border-radius:14px;
-  padding:1rem .85rem .85rem;
-  cursor:pointer;
-  overflow:hidden;
-  transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease;
-  box-shadow:0 1px 4px rgba(15,23,42,.06);
+.dv-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 0.85rem 1.15rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
-/* Top coloured stripe */
-.dv-slot::before{
-  content:'';
-  position:absolute;
-  top:0; left:0; right:0;
-  height:4px;
-  border-radius:18px 18px 0 0;
+.dv-slot:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  border-color: #0ea5e9;
 }
-.dv-slot.available::before{background:linear-gradient(90deg,#22c55e,#4ade80);}
-.dv-slot.booked::before  {background:linear-gradient(90deg,#ef4444,#f87171);}
-.dv-slot.blocked::before {background:linear-gradient(90deg,#94a3b8,#cbd5e1);}
-/* Hover */
-.dv-slot:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(15,23,42,.12);}
-.dv-slot.booked{cursor:default;background:linear-gradient(160deg,#fff 60%,#fff5f5);}
-.dv-slot.blocked{background:#f8fafc;opacity:.8;}
-.dv-slot.blocked:hover{transform:none;box-shadow:none;}
-/* Status icon pill */
-.dv-icon-pill{
-  width:32px;height:32px;
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:.75rem;
-  margin-bottom:.05rem;
+.dv-slot::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 15%; bottom: 15%;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
 }
-.available .dv-icon-pill{background:rgba(34,197,94,.12);color:#16a34a;}
-.booked   .dv-icon-pill{background:rgba(239,68,68,.12);color:#dc2626;}
-.blocked  .dv-icon-pill{background:#e2e8f0;color:#64748b;}
-/* Time */
-.dv-time{font-size:.95rem;font-weight:900;color:#1e293b;letter-spacing:-.02em;line-height:1;}
-.dv-dur{font-size:.65rem;font-weight:600;color:#94a3b8;margin-top:.2rem;}
-/* Badge */
-.dv-status-badge{
-  font-size:.6rem;font-weight:800;
-  text-transform:uppercase;letter-spacing:.08em;
-  padding:.22rem .65rem;
-  border-radius:100px;
-  display:inline-block;
+.dv-slot.available::before { background: #22c55e; }
+.dv-slot.booked::before    { background: #ef4444; }
+.dv-slot.blocked::before   { background: #94a3b8; }
+
+.dv-icon-pill {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
 }
-.dv-status-badge.available{background:rgba(34,197,94,.1);color:#15803d;border:1px solid rgba(34,197,94,.2);}
-.dv-status-badge.booked   {background:rgba(239,68,68,.1);color:#b91c1c;border:1px solid rgba(239,68,68,.2);}
-.dv-status-badge.blocked  {background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;}
-/* Client row inside booked card */
-.dv-client-row{
-  font-size:.68rem;font-weight:700;color:#dc2626;
-  background:rgba(239,68,68,.06);
-  border:1px solid rgba(239,68,68,.12);
-  border-radius:8px;
-  padding:.28rem .6rem;
-  width:100%;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+.available .dv-icon-pill { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+.booked   .dv-icon-pill { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+.blocked  .dv-icon-pill { background: #f1f5f9; color: #64748b; }
+
+.dv-info { flex: 1; min-width: 0; }
+.dv-time { font-size: 1rem; font-weight: 800; color: #1e293b; letter-spacing: -0.01em; }
+.dv-dur  { font-size: 0.72rem; font-weight: 600; color: #94a3b8; margin-top: 1px; }
+
+.dv-status-badge {
+  font-size: 0.62rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 8px;
+  margin-top: 0.4rem;
+  display: inline-block;
 }
-/* Toggle in top-right */
-.dv-toggle-wrap{
-  position:absolute;top:12px;right:12px;
+.dv-status-badge.available { background: #dcfce7; color: #166534; }
+.dv-status-badge.booked    { background: #fee2e2; color: #991b1b; }
+.dv-status-badge.blocked   { background: #f1f5f9; color: #475569; }
+
+.dv-client-info {
+  margin-top: 0.5rem;
+  font-size: 0.75rem; font-weight: 700;
+  color: #ef4444;
+  display: flex; align-items: center; gap: 0.35rem;
 }
-.dv-empty{text-align:center;padding:3rem 1rem;color:#94a3b8;}
-.dv-empty i{font-size:2.5rem;display:block;margin-bottom:.75rem;opacity:.3;}
+
+.dv-toggle-wrap { margin-left: auto; }
+.dv-empty { text-align: center; padding: 4rem 1rem; color: #94a3b8; }
+.dv-empty i { font-size: 3rem; display: block; margin-bottom: 1rem; opacity: 0.3; }
 
 /* ── Calendar View ───────────────────────────────────────────── */
 #calView{display:none;}
@@ -838,6 +831,16 @@ function renderTimelineMarkup(date) {
 
         return `
         <div class="dv-slot ${slot.status}" onclick="document.querySelector('.slot-card[data-id=\\'${slot.id}\\']')?.click()">
+            <div class="dv-icon-pill">
+                <i class="fa-solid ${icon}"></i>
+            </div>
+
+            <div class="dv-info">
+                <div class="dv-time">${formatTime(slot.start)} &ndash; ${formatTime(slot.end)}</div>
+                <div class="dv-dur">${durMins} min session</div>
+                <span class="dv-status-badge ${slot.status}">${slot.status}</span>
+                ${isBooked ? `<div class="dv-client-info"><i class="fa-solid fa-user-check"></i> Client Booked</div>` : ''}
+            </div>
 
             ${!isBooked ? `
             <div class="dv-toggle-wrap" onclick="event.stopPropagation()">
@@ -846,19 +849,6 @@ function renderTimelineMarkup(date) {
                     <span class="qt-slider"></span>
                 </label>
             </div>` : ''}
-
-            <div class="dv-icon-pill">
-                <i class="fa-solid ${icon}"></i>
-            </div>
-
-            <div>
-                <div class="dv-time">${formatTime(slot.start)}</div>
-                <div class="dv-dur">→ ${formatTime(slot.end)} &nbsp;·&nbsp; ${durMins}m</div>
-            </div>
-
-            <span class="dv-status-badge ${slot.status}">${slot.status}</span>
-
-            ${isBooked ? `<div class="dv-client-row"><i class="fa-solid fa-user-check me-1"></i>Client Booked</div>` : ''}
         </div>
         `;
     }).join('');
