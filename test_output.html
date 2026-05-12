@@ -1,0 +1,1724 @@
+
+Warning: Undefined array key "REQUEST_METHOD" in /Applications/XAMPP/xamppfiles/htdocs/powerhousegym/trainer/availability.php on line 27
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule &amp; Availability | Trainer Portal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --primary-hover: #0284c7;
+            --dark-bg: #1a1a2e;
+            --text-main: #1e293b;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+        
+        .navbar-trainer {
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            height: 76px;
+            z-index: 1030;
+        }
+        .navbar-brand {
+            font-weight: 800;
+            color: var(--primary-color) !important;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 0.5rem 1.25rem;
+        }
+        .btn-primary-custom:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            color: white;
+        }
+        
+        .page-content-wrapper {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+
+<!-- Top Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light navbar-trainer sticky-top">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand" href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/dashboard.php">
+            <i class="fa-solid fa-dumbbell me-2"></i>FitnessDestination <span class="text-muted fw-normal ms-1 fs-6">| Trainer Portal</span>
+        </a>
+        
+        <div class="d-flex align-items-center gap-3">
+                        <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/notifications.php" class="position-relative text-decoration-none" style="color:#555;" title="Notifications">
+                <i class="fa-solid fa-bell fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background:#FF6B35;font-size:.6rem;">
+                    3                </span>
+                            </a>
+            <button class="navbar-toggler d-md-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#trainerSidebarMobile">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Sidebar Offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="trainerSidebarMobile">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title fw-bold text-primary"><i class="fa-solid fa-dumbbell"></i> Trainer Portal</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+      
+<style>
+/* ── Sidebar Shell ───────────────────────────── */
+.trainer-sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: #ffffff;
+    border-right: 1px solid #eef0f5;
+    min-height: calc(100vh - 76px);
+    position: sticky;
+    top: 76px;
+    height: calc(100vh - 76px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Profile Section ─────────────────────────── */
+.sb-profile {
+    padding: 1.5rem 1.25rem 1.25rem;
+    border-bottom: 1px solid #f0f2f7;
+    background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+}
+.sb-avatar-wrap {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+}
+.sb-avatar-wrap img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid #0ea5e9;
+}
+.sb-avatar-initials {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(14,165,233,0.35);
+}
+.sb-name {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #1a1a2e;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+.sb-role {
+    font-size: 0.72rem;
+    color: #0ea5e9;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* ── Nav Links ───────────────────────────────── */
+.sb-nav { padding: 0.75rem 0.75rem; flex: 1; }
+.sb-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.72rem 1rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #6b7280;
+    font-weight: 500;
+    font-size: 0.88rem;
+    margin-bottom: 2px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.sb-link i {
+    width: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+.sb-link:hover {
+    background: rgba(14,165,233,0.06);
+    color: #0ea5e9;
+}
+.sb-link:hover i { transform: translateX(2px); }
+.sb-link.active {
+    background: linear-gradient(135deg, rgba(14,165,233,0.12), rgba(14,165,233,0.06));
+    color: #0ea5e9;
+    font-weight: 700;
+    box-shadow: inset 3px 0 0 #0ea5e9;
+}
+.sb-link.active i { color: #0ea5e9; }
+
+/* ── Section Labels ──────────────────────────── */
+.sb-section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #bbb;
+    padding: 0.75rem 1rem 0.35rem;
+}
+
+/* ── Footer Links ────────────────────────────── */
+.sb-footer {
+    border-top: 1px solid #f0f2f7;
+    padding: 0.75rem;
+    margin-top: auto;
+}
+.sb-footer-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #6b7280;
+}
+.sb-footer-link:hover { background: #f3f4f6; }
+.sb-footer-link.logout { color: #ef4444; }
+.sb-footer-link.logout:hover { background: #fef2f2; }
+
+@media(max-width: 767px) {
+    .trainer-sidebar { display: none !important; }
+}
+</style>
+
+<nav class="trainer-sidebar col-md-auto d-none d-md-flex flex-column">
+    <div class="sb-profile d-flex align-items-center gap-3">
+        <div class="sb-avatar-wrap">
+                            <img src="http://localhost/Users/biswajitdaimary/Desktop/my project/https://placehold.co/400x400/FF6B35/FFF?text=Mike" alt="Mike Johnson">
+                    </div>
+        <div style="min-width:0;">
+            <div class="sb-name">Mike Johnson</div>
+            <div class="sb-role">Trainer Portal</div>
+        </div>
+    </div>
+
+    <div class="sb-nav">
+        <div class="sb-section-label">Main</div>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/dashboard.php" class="sb-link ">
+            <i class="fa-solid fa-gauge-high"></i>
+            <span>Dashboard</span>
+        </a>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/clients.php" class="sb-link ">
+            <i class="fa-solid fa-users"></i>
+            <span>My Clients</span>
+        </a>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/bookings.php" class="sb-link ">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>My Sessions</span>
+        </a>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/availability.php" class="sb-link ">
+            <i class="fa-solid fa-clock"></i>
+            <span>Availability</span>
+        </a>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/assign_plans.php" class="sb-link ">
+            <i class="fa-solid fa-dumbbell"></i>
+            <span>Workout Plans</span>
+        </a>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/profile.php" class="sb-link ">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>My Profile</span>
+        </a>
+            </div>
+
+    <div class="sb-footer">
+        <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/index.php" class="sb-footer-link">
+            <i class="fa-solid fa-house"></i> <span>Back to Site</span>
+        </a>
+        <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/auth/logout.php" class="sb-footer-link logout">
+            <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+        </a>
+    </div>
+</nav>
+  </div>
+</div>
+
+<div class="container-fluid p-0 flex-grow-1">
+    <div class="row g-0 h-100">
+        <!-- Desktop Sidebar -->
+        
+<style>
+/* ── Sidebar Shell ───────────────────────────── */
+.trainer-sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: #ffffff;
+    border-right: 1px solid #eef0f5;
+    min-height: calc(100vh - 76px);
+    position: sticky;
+    top: 76px;
+    height: calc(100vh - 76px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Profile Section ─────────────────────────── */
+.sb-profile {
+    padding: 1.5rem 1.25rem 1.25rem;
+    border-bottom: 1px solid #f0f2f7;
+    background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+}
+.sb-avatar-wrap {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+}
+.sb-avatar-wrap img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid #0ea5e9;
+}
+.sb-avatar-initials {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(14,165,233,0.35);
+}
+.sb-name {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #1a1a2e;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+.sb-role {
+    font-size: 0.72rem;
+    color: #0ea5e9;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* ── Nav Links ───────────────────────────────── */
+.sb-nav { padding: 0.75rem 0.75rem; flex: 1; }
+.sb-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.72rem 1rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #6b7280;
+    font-weight: 500;
+    font-size: 0.88rem;
+    margin-bottom: 2px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.sb-link i {
+    width: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+.sb-link:hover {
+    background: rgba(14,165,233,0.06);
+    color: #0ea5e9;
+}
+.sb-link:hover i { transform: translateX(2px); }
+.sb-link.active {
+    background: linear-gradient(135deg, rgba(14,165,233,0.12), rgba(14,165,233,0.06));
+    color: #0ea5e9;
+    font-weight: 700;
+    box-shadow: inset 3px 0 0 #0ea5e9;
+}
+.sb-link.active i { color: #0ea5e9; }
+
+/* ── Section Labels ──────────────────────────── */
+.sb-section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #bbb;
+    padding: 0.75rem 1rem 0.35rem;
+}
+
+/* ── Footer Links ────────────────────────────── */
+.sb-footer {
+    border-top: 1px solid #f0f2f7;
+    padding: 0.75rem;
+    margin-top: auto;
+}
+.sb-footer-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #6b7280;
+}
+.sb-footer-link:hover { background: #f3f4f6; }
+.sb-footer-link.logout { color: #ef4444; }
+.sb-footer-link.logout:hover { background: #fef2f2; }
+
+@media(max-width: 767px) {
+    .trainer-sidebar { display: none !important; }
+}
+</style>
+
+<nav class="trainer-sidebar col-md-auto d-none d-md-flex flex-column">
+    <div class="sb-profile d-flex align-items-center gap-3">
+        <div class="sb-avatar-wrap">
+                            <img src="http://localhost/Users/biswajitdaimary/Desktop/my project/https://placehold.co/400x400/FF6B35/FFF?text=Mike" alt="Mike Johnson">
+                    </div>
+        <div style="min-width:0;">
+            <div class="sb-name">Mike Johnson</div>
+            <div class="sb-role">Trainer Portal</div>
+        </div>
+    </div>
+
+    <div class="sb-nav">
+        <div class="sb-section-label">Main</div>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/dashboard.php" class="sb-link ">
+            <i class="fa-solid fa-gauge-high"></i>
+            <span>Dashboard</span>
+        </a>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/clients.php" class="sb-link ">
+            <i class="fa-solid fa-users"></i>
+            <span>My Clients</span>
+        </a>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/bookings.php" class="sb-link ">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>My Sessions</span>
+        </a>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/availability.php" class="sb-link ">
+            <i class="fa-solid fa-clock"></i>
+            <span>Availability</span>
+        </a>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/assign_plans.php" class="sb-link ">
+            <i class="fa-solid fa-dumbbell"></i>
+            <span>Workout Plans</span>
+        </a>
+                <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/trainer/profile.php" class="sb-link ">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>My Profile</span>
+        </a>
+            </div>
+
+    <div class="sb-footer">
+        <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/index.php" class="sb-footer-link">
+            <i class="fa-solid fa-house"></i> <span>Back to Site</span>
+        </a>
+        <a href="http://localhost/Users/biswajitdaimary/Desktop/my project/auth/logout.php" class="sb-footer-link logout">
+            <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+        </a>
+    </div>
+</nav>
+
+        <!-- Main Content Area -->
+        <div class="col d-flex flex-column">
+            <main class="page-content-wrapper">
+<style>
+/* ── Layout ──────────────────────────────────────────── */
+.av-page{padding:1.5rem 2rem;}
+.av-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;}
+.av-title{font-size:1.45rem;font-weight:800;color:#1e293b;margin:0;}
+.av-subtitle{font-size:.83rem;color:#64748b;margin-top:.15rem;}
+.av-actions{display:flex;gap:.6rem;flex-wrap:wrap;}
+
+/* ── Week Nav ────────────────────────────────────────── */
+.week-nav{display:flex;align-items:center;gap:.5rem;background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:.35rem .6rem;}
+.week-nav button{background:none;border:none;width:30px;height:30px;border-radius:8px;cursor:pointer;color:#475569;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.week-nav button:hover{background:#f1f5f9;color:#0ea5e9;}
+.week-label{font-size:.82rem;font-weight:700;color:#334155;white-space:nowrap;padding:0 .25rem;}
+
+/* ── Stat Pills ──────────────────────────────────────── */
+.stat-row{display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;}
+.stat-pill{display:flex;align-items:center;gap:.45rem;padding:.38rem .85rem;border-radius:100px;font-size:.78rem;font-weight:700;}
+
+/* ── Board ───────────────────────────────────────────── */
+.av-board{display:grid;grid-template-columns:repeat(7,minmax(145px,1fr));gap:.75rem;overflow-x:auto;padding-bottom:1rem;}
+.day-col{display:flex;flex-direction:column;gap:.5rem;}
+.day-head{text-align:center;padding:.5rem .25rem .6rem;border-radius:10px;background:#fff;border:1.5px solid #e2e8f0;}
+.day-head .dname{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;}
+.day-head .ddate{font-size:1.05rem;font-weight:800;color:#1e293b;line-height:1;}
+.day-head.today{background:linear-gradient(135deg,#0ea5e9,#38bdf8);border-color:#0ea5e9;}
+.day-head.today .dname,.day-head.today .ddate{color:#fff;}
+
+/* ── Slot Card ───────────────────────────────────────── */
+.slot-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:.65rem .75rem;cursor:pointer;position:relative;transition:all .2s cubic-bezier(.4,0,.2,1);border-left:4px solid #e2e8f0;overflow:hidden;}
+.slot-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.09);}
+.slot-card.available{border-left-color:#22c55e;background:#fff;}
+.slot-card.available:hover{box-shadow:0 6px 20px rgba(34,197,94,.15);}
+.slot-card.booked{border-left-color:#ef4444;background:linear-gradient(135deg,#fef2f2,#fff);cursor:default;}
+.slot-card.booked:hover{box-shadow:0 6px 20px rgba(239,68,68,.15);}
+.slot-card.blocked{border-left-color:#94a3b8;background:#f8fafc;opacity:.8;}
+.slot-card.blocked:hover{opacity:1;box-shadow:0 6px 20px rgba(148,163,184,.15);}
+.slot-card.bulk-selected{outline:2.5px solid #0ea5e9;box-shadow:0 0 0 4px rgba(14,165,233,.15);}
+
+.sc-time{font-size:.78rem;font-weight:800;color:#1e293b;white-space:nowrap;}
+.sc-badge{display:inline-flex;align-items:center;gap:.25rem;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:.18rem .5rem;border-radius:100px;margin-top:.25rem;}
+.sc-badge.available{background:rgba(34,197,94,.12);color:#16a34a;}
+.sc-badge.booked{background:rgba(239,68,68,.12);color:#dc2626;}
+.sc-badge.blocked{background:#f1f5f9;color:#64748b;}
+
+/* quick toggle */
+.qt{position:relative;display:inline-block;width:30px;height:16px;flex-shrink:0;}
+.qt input{opacity:0;width:0;height:0;}
+.qt-slider{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;border-radius:34px;transition:.2s;}
+.qt-slider:before{position:absolute;content:"";height:12px;width:12px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:.2s;}
+input:checked+.qt-slider{background:#22c55e;}
+input:checked+.qt-slider:before{transform:translateX(14px);}
+
+/* client chip */
+.cc{display:flex;align-items:center;gap:.35rem;margin-top:.4rem;padding-top:.35rem;border-top:1px dashed #e2e8f0;}
+.cc-av{width:20px;height:20px;border-radius:50%;background:#6366f1;color:#fff;font-size:.55rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cc-av img{width:20px;height:20px;border-radius:50%;object-fit:cover;}
+.cc-name{font-size:.68rem;font-weight:700;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* Add-slot btn */
+.add-slot-btn{display:flex;align-items:center;justify-content:center;gap:.35rem;padding:.5rem;border:1.5px dashed #cbd5e1;border-radius:10px;background:transparent;color:#94a3b8;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .18s;width:100%;}
+.add-slot-btn:hover{border-color:#0ea5e9;color:#0ea5e9;background:rgba(14,165,233,.04);}
+
+/* ── Bulk Bar ─────────────────────────────────────────── */
+.bulk-bar{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;border-radius:16px;padding:.75rem 1.25rem;display:flex;align-items:center;gap:1rem;box-shadow:0 12px 40px rgba(0,0,0,.25);z-index:500;flex-wrap:wrap;justify-content:center;animation:slideUp .25s ease;}
+@keyframes slideUp{from{transform:translateX(-50%) translateY(20px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+.bulk-count{font-size:.82rem;font-weight:700;background:rgba(255,255,255,.1);padding:.25rem .6rem;border-radius:8px;}
+.bulk-btn{padding:.4rem .9rem;border-radius:10px;font-size:.8rem;font-weight:700;border:none;cursor:pointer;transition:all .15s;}
+.bulk-btn.enable{background:#22c55e;color:#fff;}
+.bulk-btn.block{background:#ef4444;color:#fff;}
+.bulk-btn.cancel{background:rgba(255,255,255,.1);color:#fff;}
+.bulk-btn:hover{filter:brightness(1.1);}
+.bulk-all-label{font-size:.78rem;color:#94a3b8;display:flex;align-items:center;gap:.4rem;cursor:pointer;}
+
+/* ── Modals ──────────────────────────────────────────── */
+.av-modal-bg{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(3px);padding:1rem;}
+.av-modal-bg.open{display:flex;animation:fadeIn .18s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.av-modal{background:#fff;border-radius:18px;width:100%;max-width:420px;overflow:hidden;animation:popUp .25s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popUp{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-hd{padding:1.25rem 1.5rem;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;}
+.modal-hd h6{margin:0;font-weight:800;color:#1e293b;font-size:1rem;}
+.modal-bd{padding:1.25rem 1.5rem;}
+.modal-ft{padding:1rem 1.5rem;background:#f8fafc;display:flex;gap:.75rem;border-top:1px solid #f1f5f9;}
+.mbtn{flex:1;padding:.6rem;border-radius:10px;font-weight:700;font-size:.85rem;border:none;cursor:pointer;transition:all .15s;}
+.mbtn.primary{background:#0ea5e9;color:#fff;}
+.mbtn.primary:hover{background:#0284c7;}
+.mbtn.danger{background:#fef2f2;color:#dc2626;border:1.5px solid #fecaca;}
+.mbtn.danger:hover{background:#fee2e2;}
+.mbtn.ghost{background:#f1f5f9;color:#475569;}
+.mbtn.ghost:hover{background:#e2e8f0;}
+.form-label-sm{font-size:.78rem;font-weight:700;color:#374151;margin-bottom:.35rem;display:block;}
+.form-ctrl{width:100%;padding:.55rem .75rem;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.85rem;font-family:inherit;outline:none;transition:border .15s;}
+.form-ctrl:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,.1);}
+
+/* ── Toast ───────────────────────────────────────────── */
+.av-toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#1e293b;color:#fff;padding:.7rem 1.2rem;border-radius:12px;font-size:.82rem;font-weight:600;z-index:2000;display:flex;align-items:center;gap:.6rem;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:slideUp .2s ease;max-width:280px;}
+.av-toast.success .ti{color:#22c55e;}
+.av-toast.error .ti{color:#ef4444;}
+
+/* ── Buttons ─────────────────────────────────────────── */
+.btn-av{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem 1rem;border-radius:10px;font-size:.82rem;font-weight:700;border:none;cursor:pointer;transition:all .18s;}
+.btn-av.primary{background:#0ea5e9;color:#fff;}
+.btn-av.primary:hover{background:#0284c7;}
+.btn-av.orange{background:#FF6B35;color:#fff;}
+.btn-av.orange:hover{background:#e55a24;}
+.btn-av.outline{background:#fff;border:1.5px solid #e2e8f0;color:#475569;}
+.btn-av.outline:hover{border-color:#0ea5e9;color:#0ea5e9;}
+.btn-av.bulk-mode{background:rgba(14,165,233,.1);color:#0ea5e9;border:1.5px solid #bae6fd;}
+.btn-av.bulk-mode.active{background:#0ea5e9;color:#fff;}
+
+@media(max-width:768px){.av-board{grid-template-columns:repeat(7,minmax(120px,1fr));}.av-page{padding:1rem;}}
+
+/* ── View Toggle ─────────────────────────────────────────────── */
+.view-toggle{display:flex;background:#f1f5f9;border-radius:10px;padding:.2rem;gap:.15rem;}
+.vtbtn{padding:.35rem .75rem;border-radius:8px;border:none;background:transparent;font-size:.78rem;font-weight:600;color:#64748b;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:.35rem;white-space:nowrap;}
+.vtbtn.active{background:#fff;color:#0ea5e9;box-shadow:0 1px 4px rgba(0,0,0,.1);}
+
+/* ── Day-Picker ──────────────────────────────────────────────── */
+.day-picker{display:flex;gap:.4rem;flex-wrap:nowrap;overflow-x:auto;padding:.25rem 0;}
+.dp-btn{min-width:52px;padding:.45rem .5rem;border-radius:10px;border:1.5px solid #e2e8f0;background:#fff;text-align:center;cursor:pointer;transition:all .18s;}
+.dp-btn .dp-name{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;}
+.dp-btn .dp-num{font-size:1.05rem;font-weight:800;color:#1e293b;line-height:1.2;}
+.dp-btn.today-btn{border-color:#0ea5e9;}
+.dp-btn.today-btn .dp-name,.dp-btn.today-btn .dp-num{color:#0ea5e9;}
+.dp-btn.active-day{background:#0ea5e9;border-color:#0ea5e9;}
+.dp-btn.active-day .dp-name,.dp-btn.active-day .dp-num{color:#fff;}
+
+/* ── Day View ────────────────────────────────────────────────── */
+#dayView{display:none;}
+.dv-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem;}
+.dv-date-label{font-size:1.1rem;font-weight:800;color:#1e293b;}
+.dv-subtitle{font-size:.8rem;color:#64748b;margin-top:.15rem;}
+.dv-timeline{display:flex;flex-direction:column;gap:.6rem;max-width:560px;}
+.dv-slot{display:flex;align-items:center;gap:1rem;background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:.85rem 1.1rem;border-left:5px solid #e2e8f0;transition:all .2s;cursor:pointer;}
+.dv-slot:hover{transform:translateX(4px);box-shadow:0 4px 16px rgba(0,0,0,.08);}
+.dv-slot.available{border-left-color:#22c55e;}
+.dv-slot.booked{border-left-color:#ef4444;cursor:default;}
+.dv-slot.blocked{border-left-color:#94a3b8;opacity:.8;}
+.dv-time-block{min-width:70px;text-align:center;}
+.dv-time{font-size:.92rem;font-weight:800;color:#1e293b;}
+.dv-dur{font-size:.68rem;color:#94a3b8;margin-top:.1rem;}
+.dv-divider{width:1px;height:36px;background:#e2e8f0;flex-shrink:0;}
+.dv-info{flex:1;}
+.dv-status-badge{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:.18rem .55rem;border-radius:100px;}
+.dv-status-badge.available{background:rgba(34,197,94,.12);color:#16a34a;}
+.dv-status-badge.booked{background:rgba(239,68,68,.12);color:#dc2626;}
+.dv-status-badge.blocked{background:#f1f5f9;color:#64748b;}
+.dv-client{font-size:.78rem;font-weight:600;color:#374151;margin-top:.25rem;display:flex;align-items:center;gap:.4rem;}
+.dv-slot-actions{display:flex;gap:.4rem;flex-shrink:0;}
+.dv-empty{text-align:center;padding:3rem 1rem;color:#94a3b8;}
+.dv-empty i{font-size:2.5rem;display:block;margin-bottom:.75rem;opacity:.3;}
+
+/* ── Calendar View ───────────────────────────────────────────── */
+#calView{display:none;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;}
+.cal-dow{text-align:center;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;padding:.5rem 0;}
+.cal-cell{border:1.5px solid #e2e8f0;border-radius:10px;padding:.6rem .5rem;min-height:72px;background:#fff;cursor:pointer;transition:all .18s;position:relative;}
+.cal-cell:hover{border-color:#0ea5e9;box-shadow:0 4px 12px rgba(14,165,233,.1);}
+.cal-cell.cal-today{border-color:#0ea5e9;background:linear-gradient(135deg,rgba(14,165,233,.06),#fff);}
+.cal-cell.cal-other-month{background:#f8fafc;opacity:.5;cursor:default;}
+.cal-cell.cal-past{opacity:.45;cursor:default;}
+.cal-cell.cal-selected{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,.15);}
+.cal-day-num{font-size:.88rem;font-weight:800;color:#1e293b;margin-bottom:.3rem;}
+.cal-today .cal-day-num{color:#0ea5e9;}
+.cal-dots{display:flex;gap:3px;flex-wrap:wrap;}
+.cal-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.cal-dot.available{background:#22c55e;}
+.cal-dot.booked{background:#ef4444;}
+.cal-dot.blocked{background:#94a3b8;}
+.cal-slot-count{position:absolute;top:5px;right:7px;font-size:.6rem;font-weight:800;color:#94a3b8;}
+.cal-nav{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;}
+.cal-nav button{background:#f1f5f9;border:none;width:32px;height:32px;border-radius:8px;cursor:pointer;color:#475569;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.cal-nav button:hover{background:#0ea5e9;color:#fff;}
+.cal-month-label{font-size:1rem;font-weight:800;color:#1e293b;flex:1;text-align:center;}
+</style>
+<div class="av-page">
+
+<!-- Header -->
+<div class="av-header">
+  <div>
+    <h1 class="av-title"><i class="fa-solid fa-calendar-week me-2" style="color:#0ea5e9;"></i>Schedule & Availability</h1>
+    <p class="av-subtitle" id="avSubtitle">Manage your weekly slots. Click any slot to edit or view booking details.</p>
+  </div>
+  <div class="av-actions">
+    <!-- View Toggle -->
+    <div class="view-toggle" id="viewToggle">
+      <button class="vtbtn" id="vt-day" onclick="switchView('day')"><i class="fa-solid fa-calendar-day"></i> Day</button>
+      <button class="vtbtn active" id="vt-week" onclick="switchView('week')"><i class="fa-solid fa-calendar-week"></i> Week</button>
+      <button class="vtbtn" id="vt-cal" onclick="switchView('cal')"><i class="fa-solid fa-calendar"></i> Month</button>
+    </div>
+    <div class="week-nav" id="weekNavBar">
+      <a href="?week=-1"><button type="button"><i class="fa-solid fa-chevron-left"></i></button></a>
+      <span class="week-label">May 4 – May 10</span>
+      <a href="?week=1"><button type="button"><i class="fa-solid fa-chevron-right"></i></button></a>
+          </div>
+    <button class="btn-av bulk-mode" id="bulkToggle" onclick="toggleBulk()"><i class="fa-solid fa-layer-group"></i> Bulk Select</button>
+    <button class="btn-av orange" onclick="openAutoGen()"><i class="fa-solid fa-bolt"></i> Auto-Generate</button>
+  </div>
+</div>
+
+<!-- Day picker (shown in Day View) -->
+<div id="dayPickerBar" style="display:none;margin-bottom:1rem;">
+  <div class="day-picker">
+        <div class="dp-btn " data-date="2026-05-04" onclick="selectDay('2026-05-04')">
+      <div class="dp-name">Mon</div>
+      <div class="dp-num">4</div>
+    </div>
+        <div class="dp-btn " data-date="2026-05-05" onclick="selectDay('2026-05-05')">
+      <div class="dp-name">Tue</div>
+      <div class="dp-num">5</div>
+    </div>
+        <div class="dp-btn " data-date="2026-05-06" onclick="selectDay('2026-05-06')">
+      <div class="dp-name">Wed</div>
+      <div class="dp-num">6</div>
+    </div>
+        <div class="dp-btn today-btn" data-date="2026-05-07" onclick="selectDay('2026-05-07')">
+      <div class="dp-name">Thu</div>
+      <div class="dp-num">7</div>
+    </div>
+        <div class="dp-btn " data-date="2026-05-08" onclick="selectDay('2026-05-08')">
+      <div class="dp-name">Fri</div>
+      <div class="dp-num">8</div>
+    </div>
+        <div class="dp-btn " data-date="2026-05-09" onclick="selectDay('2026-05-09')">
+      <div class="dp-name">Sat</div>
+      <div class="dp-num">9</div>
+    </div>
+        <div class="dp-btn " data-date="2026-05-10" onclick="selectDay('2026-05-10')">
+      <div class="dp-name">Sun</div>
+      <div class="dp-num">10</div>
+    </div>
+      </div>
+</div>
+
+<!-- Stats -->
+<div class="stat-row" id="statRow">
+  <div class="stat-pill" style="background:rgba(34,197,94,.1);color:#16a34a;"><i class="fa-solid fa-circle-check"></i> <span id="totAv">1</span> Available</div>
+  <div class="stat-pill" style="background:rgba(239,68,68,.1);color:#dc2626;"><i class="fa-solid fa-calendar-check"></i> <span id="totBk">0</span> Booked</div>
+  <div class="stat-pill" style="background:#f1f5f9;color:#64748b;"><i class="fa-solid fa-ban"></i> <span id="totBl">0</span> Blocked</div>
+</div>
+
+<!-- Board -->
+<div class="av-board" id="avBoard">
+<div class="day-col" data-date="2026-05-04">
+  <div class="day-head " >
+    <div class="dname" >Mon</div>
+    <div class="ddate" >4</div>
+    <div style="font-size:.65rem;color:#94a3b8;margin-top:.1rem;">May</div>
+      </div>
+
+  
+  
+    <div class="slot-card available"
+       data-id="144"
+       data-state="available"
+       title="Click to edit"
+       onclick="handleClick(this)">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:.35rem;">
+      <div style="min-width:0;">
+        <div class="sc-time" style="overflow:hidden;text-overflow:ellipsis;">06:00 AM</div>
+        <div class="sc-badge available">
+          <i class="fa-solid fa-circle" style="font-size:.4rem;"></i> Available
+                  </div>
+      </div>
+            <label class="qt" onclick="event.stopPropagation()" title="Toggle status">
+        <input type="checkbox" class="qt-cb" data-id="144" checked onchange="quickToggle(144,this)">
+        <span class="qt-slider"></span>
+      </label>
+          </div>
+      </div>
+  
+  </div>
+<div class="day-col" data-date="2026-05-05">
+  <div class="day-head " style="border-color:#ef4444; background:linear-gradient(135deg, #fef2f2, #fff);">
+    <div class="dname" style="color:#ef4444;">Tue</div>
+    <div class="ddate" style="color:#ef4444;">5</div>
+    <div style="font-size:.65rem;color:#f87171;margin-top:.1rem;">May</div>
+          <div style="font-size:0.65rem; font-weight:800; color:#ef4444; margin-top:0.3rem; background:rgba(239,68,68,0.1); border-radius:4px; padding:0.15rem; text-transform:uppercase;">Holiday</div>
+      </div>
+
+  
+      <div style="text-align:center;padding:1.5rem .5rem;color:#ef4444;font-size:.85rem;font-weight:700;display:flex;flex-direction:column;align-items:center;opacity:0.6;">
+      <i class="fa-solid fa-umbrella-beach d-block mb-2 fa-2x"></i>
+      <div>gvu</div>
+          </div>
+  
+  
+  </div>
+<div class="day-col" data-date="2026-05-06">
+  <div class="day-head " style="border-color:#ef4444; background:linear-gradient(135deg, #fef2f2, #fff);">
+    <div class="dname" style="color:#ef4444;">Wed</div>
+    <div class="ddate" style="color:#ef4444;">6</div>
+    <div style="font-size:.65rem;color:#f87171;margin-top:.1rem;">May</div>
+          <div style="font-size:0.65rem; font-weight:800; color:#ef4444; margin-top:0.3rem; background:rgba(239,68,68,0.1); border-radius:4px; padding:0.15rem; text-transform:uppercase;">Holiday</div>
+      </div>
+
+  
+      <div style="text-align:center;padding:1.5rem .5rem;color:#ef4444;font-size:.85rem;font-weight:700;display:flex;flex-direction:column;align-items:center;opacity:0.6;">
+      <i class="fa-solid fa-umbrella-beach d-block mb-2 fa-2x"></i>
+      <div>bihu</div>
+          </div>
+  
+  
+  </div>
+<div class="day-col" data-date="2026-05-07">
+  <div class="day-head today" >
+    <div class="dname" >Thu</div>
+    <div class="ddate" >7</div>
+    <div style="font-size:.65rem;color:rgba(255,255,255,.75);margin-top:.1rem;">May</div>
+      </div>
+
+  
+      <div style="text-align:center;padding:1rem .5rem;color:#cbd5e1;font-size:.72rem;">No slots</div>
+  
+  
+    <button class="add-slot-btn" onclick="openAddSlot('2026-05-07')">
+    <i class="fa-solid fa-plus"></i> Add Slot
+  </button>
+  </div>
+<div class="day-col" data-date="2026-05-08">
+  <div class="day-head " style="border-color:#ef4444; background:linear-gradient(135deg, #fef2f2, #fff);">
+    <div class="dname" style="color:#ef4444;">Fri</div>
+    <div class="ddate" style="color:#ef4444;">8</div>
+    <div style="font-size:.65rem;color:#f87171;margin-top:.1rem;">May</div>
+          <div style="font-size:0.65rem; font-weight:800; color:#ef4444; margin-top:0.3rem; background:rgba(239,68,68,0.1); border-radius:4px; padding:0.15rem; text-transform:uppercase;">Holiday</div>
+      </div>
+
+  
+      <div style="text-align:center;padding:1.5rem .5rem;color:#ef4444;font-size:.85rem;font-weight:700;display:flex;flex-direction:column;align-items:center;opacity:0.6;">
+      <i class="fa-solid fa-umbrella-beach d-block mb-2 fa-2x"></i>
+      <div>bihu</div>
+          </div>
+  
+  
+  </div>
+<div class="day-col" data-date="2026-05-09">
+  <div class="day-head " >
+    <div class="dname" >Sat</div>
+    <div class="ddate" >9</div>
+    <div style="font-size:.65rem;color:#94a3b8;margin-top:.1rem;">May</div>
+      </div>
+
+  
+      <div style="text-align:center;padding:1rem .5rem;color:#cbd5e1;font-size:.72rem;">No slots</div>
+  
+  
+    <button class="add-slot-btn" onclick="openAddSlot('2026-05-09')">
+    <i class="fa-solid fa-plus"></i> Add Slot
+  </button>
+  </div>
+<div class="day-col" data-date="2026-05-10">
+  <div class="day-head " >
+    <div class="dname" >Sun</div>
+    <div class="ddate" >10</div>
+    <div style="font-size:.65rem;color:#94a3b8;margin-top:.1rem;">May</div>
+      </div>
+
+  
+      <div style="text-align:center;padding:1rem .5rem;color:#cbd5e1;font-size:.72rem;">No slots</div>
+  
+  
+    <button class="add-slot-btn" onclick="openAddSlot('2026-05-10')">
+    <i class="fa-solid fa-plus"></i> Add Slot
+  </button>
+  </div>
+</div><!-- /board -->
+
+<!-- ── DAY VIEW ──────────────────────────────────────────────────── -->
+<div id="dayView">
+  <div class="dv-header">
+    <div>
+      <div class="dv-date-label" id="dvDateLabel">Select a day above</div>
+      <div class="dv-subtitle">Detailed timeline for the selected day</div>
+    </div>
+    <button class="btn-av primary" id="dvAddBtn" onclick="" style="display:none;"><i class="fa-solid fa-plus"></i> Add Slot</button>
+  </div>
+  <div class="dv-timeline" id="dvTimeline"><div class="dv-empty"><i class="fa-regular fa-calendar-days"></i>Choose a day to view its schedule</div></div>
+</div>
+
+<!-- ── CALENDAR VIEW ──────────────────────────────────────────────── -->
+<div id="calView">
+  <div class="cal-nav">
+    <button onclick="calPrev()"><i class="fa-solid fa-chevron-left"></i></button>
+    <div class="cal-month-label" id="calMonthLabel"></div>
+    <button onclick="calNext()"><i class="fa-solid fa-chevron-right"></i></button>
+  </div>
+  <div class="cal-grid" id="calGridDow">
+        <div class="cal-dow">Sun</div>
+        <div class="cal-dow">Mon</div>
+        <div class="cal-dow">Tue</div>
+        <div class="cal-dow">Wed</div>
+        <div class="cal-dow">Thu</div>
+        <div class="cal-dow">Fri</div>
+        <div class="cal-dow">Sat</div>
+      </div>
+  <div class="cal-grid" id="calGrid"></div>
+  <!-- Cal Day Detail Panel -->
+  <div id="calDayPanel" style="display:none;margin-top:1.5rem;max-width:560px;">
+    <div style="font-size:.95rem;font-weight:800;color:#1e293b;margin-bottom:.75rem;" id="calPanelTitle"></div>
+    <div class="dv-timeline" id="calPanelTimeline"></div>
+  </div>
+</div>
+
+</div><!-- /av-page -->
+
+<script>
+const SLOT_DATA = {"2026-05-04":[{"id":144,"date":"2026-05-04","start":"06:00","end":"07:00","status":"available","client":null,"bid":null,"booking":null,"slot":{"id":144,"start_time":"06:00","status":"available"}}]};
+const WEEK_DATES = ["2026-05-04","2026-05-05","2026-05-06","2026-05-07","2026-05-08","2026-05-09","2026-05-10"];
+const WEEK_START = '2026-05-04';
+const WEEK_END   = '2026-05-10';
+const TODAY      = '2026-05-07';
+const MAX_SLOTS_PER_DAY = 18;
+</script>
+<!-- ── ADD SLOT MODAL ───────────────────────────────────────────── -->
+<div class="av-modal-bg" id="addModal">
+  <div class="av-modal">
+    <div class="modal-hd">
+      <h6><i class="fa-solid fa-plus-circle me-2" style="color:#0ea5e9;"></i>Add New Slot</h6>
+      <button class="mbtn ghost" style="flex:0;padding:.3rem .6rem;font-size:.8rem;" onclick="closeModal('addModal')">✕</button>
+    </div>
+    <form id="addForm">
+      <div class="modal-bd">
+        <input type="hidden" name="action" value="add_slot">
+        <input type="hidden" name="csrf_token" value="0ec8ba4e07083bc0145b9faa8f5c550815780f5bac2f9f8f851c8271c974ab4e">
+        <input type="hidden" name="date" id="addDate">
+        <div style="margin-bottom:1rem;">
+          <label class="form-label-sm">Date</label>
+          <input type="text" id="addDateDisp" class="form-ctrl" readonly style="background:#f8fafc;">
+        </div>
+        <div>
+          <label class="form-label-sm">Start Time <span style="color:#94a3b8;font-weight:500;">(end time auto-set +1 hour)</span></label>
+          <input type="time" name="start_time" class="form-ctrl" required step="1800">
+        </div>
+      </div>
+      <div class="modal-ft">
+        <button type="submit" class="mbtn primary"><i class="fa-solid fa-plus"></i> Add Slot</button>
+        <button type="button" class="mbtn ghost" onclick="closeModal('addModal')">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ── EDIT SLOT MODAL ─────────────────────────────────────────── -->
+<div class="av-modal-bg" id="editModal">
+  <div class="av-modal">
+    <div class="modal-hd">
+      <h6><i class="fa-solid fa-pen-to-square me-2" style="color:#0ea5e9;"></i>Edit Slot</h6>
+      <button class="mbtn ghost" style="flex:0;padding:.3rem .6rem;font-size:.8rem;" onclick="closeModal('editModal')">✕</button>
+    </div>
+    <form id="editForm">
+      <div class="modal-bd">
+        <input type="hidden" name="action" value="update_slot">
+        <input type="hidden" name="csrf_token" value="0ec8ba4e07083bc0145b9faa8f5c550815780f5bac2f9f8f851c8271c974ab4e">
+        <input type="hidden" name="slot_id" id="editSlotId">
+        <div style="margin-bottom:1rem;">
+          <label class="form-label-sm">Start Time</label>
+          <input type="time" name="start_time" id="editStartTime" class="form-ctrl" required step="1800">
+        </div>
+        <div>
+          <label class="form-label-sm">Status</label>
+          <select name="status" id="editStatus" class="form-ctrl">
+            <option value="available">✅ Available</option>
+            <option value="blocked">🚫 Blocked</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-ft">
+        <button type="submit" class="mbtn primary"><i class="fa-solid fa-save"></i> Save</button>
+        <button type="button" class="mbtn danger" id="deleteBtn" onclick="deleteSlot()"><i class="fa-solid fa-trash"></i> Delete</button>
+        <button type="button" class="mbtn ghost" onclick="closeModal('editModal')">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ── AUTO-GEN MODAL ──────────────────────────────────────────── -->
+<div class="av-modal-bg" id="genModal">
+  <div class="av-modal" style="max-width:520px;">
+    <div class="modal-hd" style="background:linear-gradient(135deg,#fff7ed,#fff);">
+      <div>
+        <h6 style="margin:0;font-weight:800;color:#1e293b;"><i class="fa-solid fa-bolt me-2" style="color:#FF6B35;"></i>Auto-Generate Slots</h6>
+        <p style="margin:0;font-size:.72rem;color:#94a3b8;margin-top:.15rem;">Configure your schedule in seconds</p>
+      </div>
+      <button class="mbtn ghost" style="flex:0;padding:.3rem .6rem;font-size:.8rem;" onclick="closeModal('genModal')">✕</button>
+    </div>
+    <form id="genForm">
+      <div class="modal-bd" style="display:flex;flex-direction:column;gap:1.1rem;">
+        <input type="hidden" name="action" value="autogenerate">
+        <input type="hidden" name="csrf_token" value="0ec8ba4e07083bc0145b9faa8f5c550815780f5bac2f9f8f851c8271c974ab4e">
+
+        <!-- Multi-Day Selection -->
+        <div>
+          <label class="form-label-sm">Apply to Days <span style="color:#94a3b8;font-weight:500;">(select one or more)</span></label>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:.35rem;margin-top:.4rem;" id="dayCheckGrid">
+                        <label style="text-align:center;cursor:not-allowed;">
+              <input type="checkbox" name="dates[]" value="2026-05-04" class="day-cb" disabled  style="display:none;" onchange="updateGenPreview()">
+              <div class="gen-day-pill past" data-date="2026-05-04">
+                <div style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">Mon</div>
+                <div style="font-size:.85rem;font-weight:800;">4</div>
+              </div>
+            </label>
+                        <label style="text-align:center;cursor:not-allowed;">
+              <input type="checkbox" name="dates[]" value="2026-05-05" class="day-cb" disabled  style="display:none;" onchange="updateGenPreview()">
+              <div class="gen-day-pill past" data-date="2026-05-05">
+                <div style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">Tue</div>
+                <div style="font-size:.85rem;font-weight:800;">5</div>
+              </div>
+            </label>
+                        <label style="text-align:center;cursor:not-allowed;">
+              <input type="checkbox" name="dates[]" value="2026-05-06" class="day-cb" disabled  style="display:none;" onchange="updateGenPreview()">
+              <div class="gen-day-pill past" data-date="2026-05-06">
+                <div style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">Wed</div>
+                <div style="font-size:.85rem;font-weight:800;">6</div>
+              </div>
+            </label>
+                        <label style="text-align:center;cursor:pointer;">
+              <input type="checkbox" name="dates[]" value="2026-05-07" class="day-cb"  checked style="display:none;" onchange="updateGenPreview()">
+              <div class="gen-day-pill today-pill" data-date="2026-05-07">
+                <div style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">Thu</div>
+                <div style="font-size:.85rem;font-weight:800;">7</div>
+              </div>
+            </label>
+                        <label style="text-align:center;cursor:pointer;">
+              <input type="checkbox" name="dates[]" value="2026-05-08" class="day-cb"   style="display:none;" onchange="updateGenPreview()">
+              <div class="gen-day-pill " data-date="2026-05-08">
+                <div style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">Fri</div>
+                <div style="font-size:.85rem;font-weight:800;">8</div>
+              </div>
+            </label>
+                        <label style="text-align:center;cursor:pointer;">
+              <input type="checkbox" name="dates[]" value="2026-05-09" class="day-cb"   style="display:none;" onchange="updateGenPreview()">
+              <div class="gen-day-pill " data-date="2026-05-09">
+                <div style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">Sat</div>
+                <div style="font-size:.85rem;font-weight:800;">9</div>
+              </div>
+            </label>
+                        <label style="text-align:center;cursor:pointer;">
+              <input type="checkbox" name="dates[]" value="2026-05-10" class="day-cb"   style="display:none;" onchange="updateGenPreview()">
+              <div class="gen-day-pill " data-date="2026-05-10">
+                <div style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">Sun</div>
+                <div style="font-size:.85rem;font-weight:800;">10</div>
+              </div>
+            </label>
+                      </div>
+        </div>
+
+        <!-- Time Range -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">
+          <div>
+            <label class="form-label-sm">From</label>
+            <input type="time" name="from" id="genFrom" class="form-ctrl" value="06:00" onchange="updateGenPreview()">
+          </div>
+          <div>
+            <label class="form-label-sm">To</label>
+            <input type="time" name="to" id="genTo" class="form-ctrl" value="20:00" onchange="updateGenPreview()">
+          </div>
+        </div>
+
+        <!-- Duration & Break -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">
+          <div>
+            <label class="form-label-sm">Session Duration</label>
+            <select name="duration" id="genDuration" class="form-ctrl" onchange="updateGenPreview()">
+              <option value="30">30 minutes</option>
+              <option value="45">45 minutes</option>
+              <option value="60" selected>1 hour</option>
+              <option value="90">1.5 hours</option>
+              <option value="120">2 hours</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label-sm">Break Between Slots</label>
+            <select name="break_time" id="genBreak" class="form-ctrl" onchange="updateGenPreview()">
+              <option value="0">No break</option>
+              <option value="15">15 min break</option>
+              <option value="30">30 min break</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Slot Quantity -->
+        <div>
+          <label class="form-label-sm">Slots To Generate Per Day <span style="color:#94a3b8;font-weight:500;">(up to 18)</span></label>
+          <div style="display:flex;align-items:center;gap:.6rem;margin-top:.4rem;">
+            <button type="button" class="qty-btn" onclick="changeQty(-1)"><i class="fa-solid fa-minus"></i></button>
+            <div style="flex:1;position:relative;">
+              <input type="number" name="max_slots" id="genQty" class="form-ctrl" value="18" min="1" max="18" style="text-align:center;font-weight:800;font-size:1rem;padding-right:2.5rem;" oninput="updateGenPreview()">
+              <span style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);font-size:.72rem;color:#94a3b8;pointer-events:none;">slots</span>
+            </div>
+            <button type="button" class="qty-btn" onclick="changeQty(1)"><i class="fa-solid fa-plus"></i></button>
+          </div>
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem;" id="qtyPresets">
+                        <button type="button" class="qty-preset" onclick="setQty(6)">6</button>
+                        <button type="button" class="qty-preset" onclick="setQty(9)">9</button>
+                        <button type="button" class="qty-preset" onclick="setQty(12)">12</button>
+                        <button type="button" class="qty-preset" onclick="setQty(15)">15</button>
+                        <button type="button" class="qty-preset" onclick="setQty(18)">18</button>
+                      </div>
+        </div>
+
+        <!-- Initial Status -->
+        <div>
+          <label class="form-label-sm">Initial Status</label>
+          <div style="display:flex;gap:.5rem;margin-top:.4rem;">
+            <label style="flex:1;cursor:pointer;">
+              <input type="radio" name="init_status" value="available" checked style="display:none;" onchange="updateGenPreview()">
+              <div class="gen-status-pill" data-val="available">
+                <i class="fa-solid fa-circle" style="font-size:.5rem;"></i> Available
+              </div>
+            </label>
+            <label style="flex:1;cursor:pointer;">
+              <input type="radio" name="init_status" value="blocked" style="display:none;" onchange="updateGenPreview()">
+              <div class="gen-status-pill" data-val="blocked">
+                <i class="fa-solid fa-ban" style="font-size:.75rem;"></i> Blocked
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Clear existing toggle -->
+        <label style="display:flex;align-items:center;gap:.65rem;cursor:pointer;padding:.65rem .85rem;background:#fef3f2;border-radius:10px;border:1.5px solid #fecaca;">
+          <input type="checkbox" name="clear_existing" id="clearExisting" style="width:16px;height:16px;accent-color:#ef4444;">
+          <div>
+            <div style="font-size:.8rem;font-weight:700;color:#dc2626;"><i class="fa-solid fa-trash me-1"></i>Clear existing non-booked slots first</div>
+            <div style="font-size:.7rem;color:#f87171;margin-top:.1rem;">Booked slots are always protected</div>
+          </div>
+        </label>
+
+        <!-- Live Preview -->
+        <div id="genPreview" style="background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:10px;padding:.75rem 1rem;">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#0ea5e9;margin-bottom:.4rem;"><i class="fa-solid fa-eye me-1"></i>Preview</div>
+          <div id="genPreviewText" style="font-size:.82rem;color:#1e293b;font-weight:600;">Select days and times to see preview</div>
+          <div id="genPreviewSlots" style="display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem;"></div>
+        </div>
+      </div>
+
+      <div class="modal-ft">
+        <button type="submit" class="mbtn primary" id="genSubmitBtn"><i class="fa-solid fa-bolt"></i> <span id="genBtnLabel">Generate Slots</span></button>
+        <button type="button" class="mbtn ghost" onclick="closeModal('genModal')">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+.gen-day-pill{border:1.5px solid #e2e8f0;border-radius:8px;padding:.35rem .2rem;text-align:center;transition:all .15s;color:#94a3b8;background:#fff;}
+.day-cb:checked + .gen-day-pill{background:#0ea5e9;border-color:#0ea5e9;color:#fff;}
+.gen-day-pill.past{background:#f8fafc;color:#cbd5e1;border-color:#f1f5f9;}
+.gen-day-pill.today-pill{border-color:#0ea5e9;color:#0ea5e9;}
+.day-cb:checked + .gen-day-pill.today-pill{background:#0ea5e9;color:#fff;}
+.gen-status-pill{border:1.5px solid #e2e8f0;border-radius:8px;padding:.45rem .75rem;text-align:center;font-size:.78rem;font-weight:700;color:#64748b;transition:all .15s;background:#fff;display:flex;align-items:center;justify-content:center;gap:.4rem;}
+[name="init_status"]:checked + .gen-status-pill[data-val="available"]{background:rgba(34,197,94,.12);border-color:#22c55e;color:#16a34a;}
+[name="init_status"]:checked + .gen-status-pill[data-val="blocked"]{background:rgba(239,68,68,.1);border-color:#ef4444;color:#dc2626;}
+/* Quantity stepper */
+.qty-btn{width:36px;height:36px;flex-shrink:0;border-radius:8px;border:1.5px solid #e2e8f0;background:#f8fafc;color:#374151;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .15s;}
+.qty-btn:hover{background:#0ea5e9;border-color:#0ea5e9;color:#fff;}
+.qty-preset{padding:.25rem .65rem;font-size:.72rem;font-weight:700;border:1.5px solid #e2e8f0;border-radius:6px;background:#fff;color:#475569;cursor:pointer;transition:all .15s;}
+.qty-preset:hover{background:#0ea5e9;border-color:#0ea5e9;color:#fff;}
+.qty-preset.active-preset{background:#0ea5e9;border-color:#0ea5e9;color:#fff;}
+</style>
+
+<!-- ── BOOKING DETAIL MODAL ────────────────────────────────────── -->
+<div class="av-modal-bg" id="bookModal">
+  <div class="av-modal">
+    <div class="modal-hd">
+      <h6><i class="fa-solid fa-user-check me-2" style="color:#ef4444;"></i>Booking Details</h6>
+      <button class="mbtn ghost" style="flex:0;padding:.3rem .6rem;font-size:.8rem;" onclick="closeModal('bookModal')">✕</button>
+    </div>
+    <div class="modal-bd" id="bookBody"></div>
+    <div class="modal-ft" id="bookActions"></div>
+  </div>
+</div>
+
+<!-- ── BULK BAR ────────────────────────────────────────────────── -->
+<div class="bulk-bar" id="bulkBar" style="display:none;">
+  <span class="bulk-count"><span id="bulkCount">0</span> selected</span>
+  <button class="bulk-btn enable" onclick="doBulk('available')"><i class="fa-solid fa-circle-check"></i> Enable</button>
+  <button class="bulk-btn block" onclick="doBulk('blocked')"><i class="fa-solid fa-ban"></i> Block</button>
+  <label class="bulk-all-label"><input type="checkbox" id="applyAllCb" style="width:14px;height:14px;"> All week</label>
+  <button class="bulk-btn cancel" onclick="toggleBulk()">✕ Cancel</button>
+</div>
+
+<!-- Toast container -->
+<div id="toastCont"></div>
+<script>
+const CSRF = '0ec8ba4e07083bc0145b9faa8f5c550815780f5bac2f9f8f851c8271c974ab4e';
+const WEEK = 0;
+const POST_URL = `availability.php?week=${encodeURIComponent(WEEK)}`;
+const STATUS_LABELS = { available: 'Available', booked: 'Booked', blocked: 'Blocked' };
+const SLOT_DETAILS = {};
+for (const [date, slots] of Object.entries(SLOT_DATA)) {
+  for (const slot of slots) {
+    SLOT_DETAILS[slot.id] = slot;
+  }
+}
+
+let bulkMode = false;
+let selectedIds = new Set();
+let currentView = 'week';
+let selectedDay = WEEK_DATES.includes(TODAY) ? TODAY : (WEEK_DATES[0] || TODAY);
+let calCursor = new Date(`${WEEK_START}T00:00:00`);
+calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth(), 1);
+
+function toSearchParams(data) {
+  const params = new URLSearchParams();
+  if (data instanceof FormData) {
+    for (const [key, value] of data.entries()) params.append(key, value);
+    return params;
+  }
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach(item => params.append(key, item));
+    } else if (value !== undefined && value !== null) {
+      params.append(key, value);
+    }
+  });
+
+  return params;
+}
+
+function pad(num) {
+  return String(num).padStart(2, '0');
+}
+
+function dateToString(date) {
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
+function formatDate(date, options) {
+  return new Date(`${date}T00:00:00`).toLocaleDateString('en-US', options);
+}
+
+function formatTime(time) {
+  return new Date(`2000-01-01T${time}:00`).toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit'
+  });
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  }[ch]));
+}
+
+function renderTimelineMarkup(date, emptyText) {
+  const slots = SLOT_DATA[date] || [];
+  if (!slots.length) {
+    return `<div class="dv-empty"><i class="fa-regular fa-calendar-xmark"></i>${emptyText}</div>`;
+  }
+
+  return slots.map(slot => `
+    <div class="dv-slot ${slot.status}" data-id="${slot.id}" data-state="${slot.status}" onclick="handleClick(this)">
+      <div class="dv-time-block">
+        <div class="dv-time">${formatTime(slot.start)}</div>
+        <div class="dv-dur">to ${formatTime(slot.end)}</div>
+      </div>
+      <div class="dv-divider"></div>
+      <div class="dv-info">
+        <span class="dv-status-badge ${slot.status}">${STATUS_LABELS[slot.status] || slot.status}</span>
+        ${slot.client ? `<div class="dv-client"><i class="fa-solid fa-user"></i>${escapeHtml(slot.client)}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateDayPicker() {
+  document.querySelectorAll('.dp-btn').forEach(btn => {
+    btn.classList.toggle('active-day', btn.dataset.date === selectedDay);
+  });
+}
+
+function renderDayView() {
+  const slots = SLOT_DATA[selectedDay] || [];
+  document.getElementById('dvDateLabel').textContent = formatDate(selectedDay, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric'
+  });
+  document.getElementById('dvTimeline').innerHTML = renderTimelineMarkup(selectedDay, 'No slots for this day');
+
+  const addBtn = document.getElementById('dvAddBtn');
+  if (selectedDay >= TODAY && slots.length < MAX_SLOTS_PER_DAY) {
+    addBtn.style.display = 'inline-flex';
+    addBtn.onclick = () => openAddSlot(selectedDay);
+  } else {
+    addBtn.style.display = 'none';
+    addBtn.onclick = null;
+  }
+}
+
+function renderCalendarPanel(date) {
+  const panel = document.getElementById('calDayPanel');
+  if (!date || !WEEK_DATES.includes(date)) {
+    panel.style.display = 'none';
+    return;
+  }
+
+  panel.style.display = 'block';
+  document.getElementById('calPanelTitle').textContent = formatDate(date, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric'
+  });
+  document.getElementById('calPanelTimeline').innerHTML = renderTimelineMarkup(date, 'No slots for this day');
+}
+
+function renderCalendar() {
+  const grid = document.getElementById('calGrid');
+  document.getElementById('calMonthLabel').textContent = calCursor.toLocaleDateString('en-US', {
+    month: 'long',
+    year: 'numeric'
+  });
+
+  const monthStart = new Date(calCursor.getFullYear(), calCursor.getMonth(), 1);
+  const gridStart = new Date(monthStart);
+  gridStart.setDate(monthStart.getDate() - monthStart.getDay());
+
+  let html = '';
+  for (let i = 0; i < 42; i++) {
+    const date = new Date(gridStart);
+    date.setDate(gridStart.getDate() + i);
+
+    const dateStr = dateToString(date);
+    const slots = SLOT_DATA[dateStr] || [];
+    const isCurrentMonth = date.getMonth() === calCursor.getMonth();
+    const isLoadedDate = WEEK_DATES.includes(dateStr);
+
+    const classes = ['cal-cell'];
+    if (dateStr === TODAY) classes.push('cal-today');
+    if (!isCurrentMonth) classes.push('cal-other-month');
+    if (dateStr < TODAY && isCurrentMonth) classes.push('cal-past');
+    if (dateStr === selectedDay) classes.push('cal-selected');
+
+    const dots = slots.slice(0, 4).map(slot => `<span class="cal-dot ${slot.status}"></span>`).join('');
+    const clickAttr = isLoadedDate ? `onclick="selectCalendarDay('${dateStr}')"` : '';
+
+    html += `
+      <div class="${classes.join(' ')}" ${clickAttr}>
+        <div class="cal-day-num">${date.getDate()}</div>
+        ${slots.length ? `<div class="cal-slot-count">${slots.length}</div>` : ''}
+        <div class="cal-dots">${dots}</div>
+      </div>
+    `;
+  }
+
+  grid.innerHTML = html;
+  renderCalendarPanel(selectedDay);
+}
+
+function switchView(view) {
+  currentView = view;
+  if (bulkMode && view !== 'week') toggleBulk();
+
+  const isWeek = view === 'week';
+  const isDay = view === 'day';
+  const isCal = view === 'cal';
+
+  document.getElementById('vt-week').classList.toggle('active', isWeek);
+  document.getElementById('vt-day').classList.toggle('active', isDay);
+  document.getElementById('vt-cal').classList.toggle('active', isCal);
+
+  document.getElementById('avBoard').style.display = isWeek ? 'grid' : 'none';
+  document.getElementById('dayView').style.display = isDay ? 'block' : 'none';
+  document.getElementById('calView').style.display = isCal ? 'block' : 'none';
+  document.getElementById('dayPickerBar').style.display = isDay ? 'block' : 'none';
+  document.getElementById('weekNavBar').style.display = isCal ? 'none' : 'flex';
+  document.getElementById('bulkToggle').style.display = isWeek ? 'inline-flex' : 'none';
+
+  document.getElementById('avSubtitle').textContent = {
+    week: 'Manage your weekly slots. Click any slot to edit or view booking details.',
+    day: 'Review one day at a time and edit any open slot from the timeline.',
+    cal: 'Monthly calendar of the currently loaded week. Select a highlighted day to inspect its slots.'
+  }[view];
+
+  if (isDay) {
+    updateDayPicker();
+    renderDayView();
+  }
+
+  if (isCal) {
+    renderCalendar();
+  }
+}
+
+function selectDay(date) {
+  selectedDay = date;
+  updateDayPicker();
+  if (currentView === 'day') renderDayView();
+  if (currentView === 'cal') renderCalendar();
+}
+
+function selectCalendarDay(date) {
+  if (!WEEK_DATES.includes(date)) return;
+  selectedDay = date;
+  renderCalendar();
+}
+
+function calPrev() {
+  calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth() - 1, 1);
+  renderCalendar();
+}
+
+function calNext() {
+  calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth() + 1, 1);
+  renderCalendar();
+}
+
+/* ── AJAX Helper ─────────────────────────────────────── */
+function ajax(data, onSuccess) {
+  fetch(POST_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'application/x-www-form-urlencoded','X-Requested-With':'XMLHttpRequest'},
+    body: toSearchParams(data)
+  })
+  .then(r => r.json())
+  .then(r => {
+    if (r.success) { toast(r.message || 'Done', 'success'); onSuccess && onSuccess(r); reload(); }
+    else toast(r.error || 'Error', 'error');
+  })
+  .catch(() => toast('Network error', 'error'));
+}
+
+function reload() {
+  setTimeout(() => location.reload(), 600);
+}
+
+/* ── Toast ───────────────────────────────────────────── */
+function toast(msg, type='success') {
+  const t = document.createElement('div');
+  t.className = `av-toast ${type}`;
+  t.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check':'fa-circle-xmark'} ti"></i>${msg}`;
+  document.getElementById('toastCont').appendChild(t);
+  setTimeout(() => t.remove(), 3200);
+}
+
+/* ── Modal helpers ───────────────────────────────────── */
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+/* ── Add Slot ────────────────────────────────────────── */
+function openAddSlot(date) {
+  if (bulkMode) return;
+  document.getElementById('addDate').value = date;
+  const d = new Date(date + 'T00:00:00');
+  document.getElementById('addDateDisp').value = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  openModal('addModal');
+}
+
+document.getElementById('addForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  ajax(Object.fromEntries(new FormData(this)));
+  closeModal('addModal');
+});
+
+/* ── Auto-Generate ───────────────────────────────────── */
+function openAutoGen() {
+  openModal('genModal');
+  // Sync pill visuals with checkbox states on open
+  document.querySelectorAll('.day-cb').forEach(cb => syncDayPill(cb));
+  updateGenPreview();
+}
+
+// Toggle day pill visual when label is clicked
+document.getElementById('dayCheckGrid')?.addEventListener('change', e => {
+  if (e.target.classList.contains('day-cb')) syncDayPill(e.target);
+});
+function syncDayPill(cb) {
+  const pill = cb.nextElementSibling;
+  if (!pill) return;
+  if (cb.checked) pill.style.background = '#0ea5e9', pill.style.borderColor = '#0ea5e9', pill.style.color = '#fff';
+  else { pill.style.background = ''; pill.style.borderColor = ''; pill.style.color = ''; }
+}
+
+// Live preview updater
+function updateGenPreview() {
+  const days     = [...document.querySelectorAll('.day-cb:checked')].map(c => c.value);
+  const from     = document.getElementById('genFrom')?.value || '06:00';
+  const to       = document.getElementById('genTo')?.value   || '20:00';
+  const duration = parseInt(document.getElementById('genDuration')?.value || 60);
+  const brk      = parseInt(document.getElementById('genBreak')?.value || 0);
+  const qtyInput = document.getElementById('genQty');
+  const maxQty   = Math.max(1, Math.min(MAX_SLOTS_PER_DAY, parseInt(qtyInput?.value || MAX_SLOTS_PER_DAY, 10) || MAX_SLOTS_PER_DAY));
+  const step     = duration + brk;
+
+  const previewText  = document.getElementById('genPreviewText');
+  const previewSlots = document.getElementById('genPreviewSlots');
+  const btnLabel     = document.getElementById('genBtnLabel');
+  if (qtyInput && String(qtyInput.value) !== String(maxQty)) qtyInput.value = maxQty;
+
+  // Highlight active preset button
+  document.querySelectorAll('.qty-preset').forEach(b => b.classList.remove('active-preset'));
+  const matchBtn = [...document.querySelectorAll('.qty-preset')].find(b => b.textContent.trim() === String(maxQty));
+  if (matchBtn) matchBtn.classList.add('active-preset');
+
+  if (!days.length || !from || !to || from >= to) {
+    previewText.textContent = days.length ? 'Invalid time range' : 'Select at least one day';
+    previewSlots.innerHTML = '';
+    btnLabel.textContent = 'Generate Slots';
+    return;
+  }
+
+  // Calculate slot times — cap at the selected quantity and the fixed per-day limit
+  const allSlots = [];
+  let cur = timeToMins(from);
+  const end = timeToMins(to);
+  while (cur + duration <= end) {
+    allSlots.push({ s: minsToTime(cur), e: minsToTime(cur + duration) });
+    cur += step;
+  }
+  const slots = allSlots.slice(0, maxQty);
+
+  const totalSlots = slots.length * days.length;
+  const statusLabel = document.querySelector('[name="init_status"]:checked')?.value === 'blocked' ? 'Blocked' : 'Available';
+  const qtyNote = `<span style="color:#f59e0b;font-size:.72rem;"> (${slots.length}/${MAX_SLOTS_PER_DAY} per day)</span>`;
+  previewText.innerHTML = `Will create <strong>${totalSlots} slot${totalSlots!==1?'s':''}</strong> across <strong>${days.length} day${days.length!==1?'s':''}</strong>&nbsp;·&nbsp; ${slots.length}/day&nbsp;·&nbsp;${statusLabel}${qtyNote}`;
+
+  // Show slot time chips
+  previewSlots.innerHTML = slots.map(s =>
+    `<span style="background:#e0f2fe;color:#0369a1;font-size:.68rem;font-weight:700;padding:.18rem .5rem;border-radius:6px;">${formatT(s.s)}</span>`
+  ).join('');
+
+  btnLabel.textContent = `Generate ${totalSlots} Slot${totalSlots!==1?'s':''}`;
+}
+
+// Quantity stepper helpers
+function changeQty(delta) {
+  const el = document.getElementById('genQty');
+  const current = parseInt(el.value || MAX_SLOTS_PER_DAY, 10) || MAX_SLOTS_PER_DAY;
+  const next = Math.max(1, Math.min(MAX_SLOTS_PER_DAY, current + delta));
+  el.value = next;
+  updateGenPreview();
+}
+function setQty(val) {
+  document.getElementById('genQty').value = Math.max(1, Math.min(MAX_SLOTS_PER_DAY, val));
+  updateGenPreview();
+}
+
+function timeToMins(t) {
+  const [h,m] = t.split(':').map(Number); return h*60+m;
+}
+function minsToTime(m) {
+  return String(Math.floor(m/60)).padStart(2,'0') + ':' + String(m%60).padStart(2,'0');
+}
+function formatT(t) {
+  const [h,m] = t.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM'; const hh = h%12||12;
+  return `${hh}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+
+document.getElementById('genForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const fd = new FormData(this);
+  // FormData handles arrays natively — pass as-is
+  const data = {};
+  for (const [k,v] of fd.entries()) {
+    if (k === 'dates[]') {
+      if (!data['dates[]']) data['dates[]'] = [];
+      data['dates[]'].push(v);
+    } else { data[k] = v; }
+  }
+  // Flatten for URLSearchParams
+  const params = new URLSearchParams();
+  for (const [k,v] of Object.entries(data)) {
+    if (Array.isArray(v)) v.forEach(val => params.append(k, val));
+    else params.append(k, v);
+  }
+  fetch(POST_URL, {
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded','X-Requested-With':'XMLHttpRequest'},
+    body: params
+  }).then(r=>r.json()).then(r=>{
+    if(r.success){toast(r.message||'Done','success');setTimeout(()=>location.reload(),700);}
+    else toast(r.error||'Error','error');
+  }).catch(()=>toast('Network error','error'));
+  closeModal('genModal');
+});
+
+/* ── Slot Click Handler ──────────────────────────────── */
+function handleClick(el) {
+  const id = parseInt(el.dataset.id, 10);
+  const slot = SLOT_DETAILS[id];
+  const state = el.dataset.state || slot?.status;
+
+  if (!slot) {
+    toast('Slot data unavailable', 'error');
+    return;
+  }
+
+  if (bulkMode) {
+    if (state === 'booked') { toast('Cannot select booked slot', 'error'); return; }
+    if (selectedIds.has(id)) { selectedIds.delete(id); el.classList.remove('bulk-selected'); }
+    else { selectedIds.add(id); el.classList.add('bulk-selected'); }
+    updateBulkBar();
+    return;
+  }
+
+  if (state === 'booked' && slot.booking) {
+    openBookingModal(slot.booking);
+  } else if (state === 'booked') {
+    toast('Booking details unavailable for this slot', 'error');
+  } else {
+    openEditModal(slot.slot);
+  }
+}
+
+/* ── Quick Toggle ────────────────────────────────────── */
+function quickToggle(id, cb) {
+  ajax({ action:'toggle_status', csrf_token:CSRF, slot_id:id });
+}
+
+/* ── Edit Slot Modal ─────────────────────────────────── */
+function openEditModal(sl) {
+  document.getElementById('editSlotId').value = sl.id;
+  document.getElementById('editStartTime').value = sl.start_time;
+  document.getElementById('editStatus').value = sl.status;
+  openModal('editModal');
+}
+
+document.getElementById('editForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  ajax(Object.fromEntries(new FormData(this)));
+  closeModal('editModal');
+});
+
+function deleteSlot() {
+  const id = document.getElementById('editSlotId').value;
+  if (!confirm('Delete this slot?')) return;
+  ajax({ action:'delete_slot', csrf_token:CSRF, slot_id:id });
+  closeModal('editModal');
+}
+
+/* ── Booking Detail Modal ────────────────────────────── */
+function openBookingModal(br) {
+  const safeName = escapeHtml(br.name || '');
+  const safeEmail = escapeHtml(br.email || '');
+  const safePhone = escapeHtml(br.phone || '');
+  const safeDate = escapeHtml(br.date || '');
+  const safeTime = escapeHtml(br.time || '');
+  const safeStatus = escapeHtml(br.status || '');
+  const safeNotes = escapeHtml(br.notes || '').replace(/\n/g, '<br>');
+  const safePhoto = escapeHtml(br.photo || '');
+  const safeInitial = escapeHtml((br.name || '?').trim().charAt(0).toUpperCase() || '?');
+
+  const photo = br.photo
+    ? `<img src="${safePhoto}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;">`
+    : `<div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#818cf8);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;">${safeInitial}</div>`;
+
+  const statColor = {pending:'#f59e0b',confirmed:'#22c55e',completed:'#6366f1',cancelled:'#ef4444'};
+  const col = statColor[br.status] || '#94a3b8';
+
+  document.getElementById('bookBody').innerHTML = `
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;padding:1rem;background:#f8fafc;border-radius:12px;">
+      ${photo}
+      <div>
+        <div style="font-weight:800;font-size:1rem;color:#1e293b;">${safeName}</div>
+        <div style="font-size:.78rem;color:#64748b;">${safeEmail}</div>
+        ${br.phone ? `<div style="font-size:.78rem;color:#64748b;">${safePhone}</div>` : ''}
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:1rem;">
+      <div style="background:#f8fafc;border-radius:10px;padding:.75rem;"><div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;margin-bottom:.2rem;">Date</div><div style="font-weight:700;font-size:.82rem;color:#1e293b;">${safeDate}</div></div>
+      <div style="background:#f8fafc;border-radius:10px;padding:.75rem;"><div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;margin-bottom:.2rem;">Time</div><div style="font-weight:700;font-size:.82rem;color:#1e293b;">${safeTime}</div></div>
+    </div>
+    <div style="text-align:center;"><span style="background:${col}22;color:${col};padding:.3rem .9rem;border-radius:100px;font-size:.72rem;font-weight:800;text-transform:uppercase;">${safeStatus}</span></div>
+    ${br.notes ? `<div style="margin-top:1rem;padding:.75rem;background:#f8fafc;border-radius:10px;font-size:.78rem;color:#475569;">${safeNotes}</div>` : ''}
+    <input type="hidden" id="bk_bid" value="${br.booking_id}">
+  `;
+
+  const acts = document.getElementById('bookActions');
+  acts.innerHTML = '';
+  if (br.status === 'pending') {
+    acts.innerHTML = `
+      <button class="mbtn primary" onclick="setBookingStatus('confirmed')"><i class="fa-solid fa-check me-1"></i>Accept</button>
+      <button class="mbtn danger" onclick="setBookingStatus('cancelled')"><i class="fa-solid fa-xmark me-1"></i>Decline</button>`;
+  } else if (br.status === 'confirmed') {
+    acts.innerHTML = `
+      <button class="mbtn primary" onclick="setBookingStatus('completed')"><i class="fa-solid fa-flag-checkered me-1"></i>Complete</button>
+      <button class="mbtn danger" onclick="setBookingStatus('cancelled')"><i class="fa-solid fa-xmark me-1"></i>Cancel</button>`;
+  }
+  acts.innerHTML += `<button class="mbtn ghost" onclick="closeModal('bookModal')">Close</button>`;
+  openModal('bookModal');
+}
+
+function setBookingStatus(ns) {
+  const bid = document.getElementById('bk_bid').value;
+  ajax({ action:'bstatus', csrf_token:CSRF, bid:bid, ns:ns });
+  closeModal('bookModal');
+}
+
+/* ── Bulk Select ─────────────────────────────────────── */
+function toggleBulk() {
+  bulkMode = !bulkMode;
+  const btn = document.getElementById('bulkToggle');
+  const bar = document.getElementById('bulkBar');
+  btn.classList.toggle('active', bulkMode);
+  if (!bulkMode) {
+    selectedIds.clear();
+    document.querySelectorAll('.slot-card.bulk-selected').forEach(el => el.classList.remove('bulk-selected'));
+    bar.style.display = 'none';
+  } else {
+    bar.style.display = 'flex';
+    updateBulkBar();
+  }
+}
+
+function updateBulkBar() {
+  document.getElementById('bulkCount').textContent = selectedIds.size;
+}
+
+function doBulk(target) {
+  if (!selectedIds.size) { toast('Select at least one slot', 'error'); return; }
+  const applyAll = document.getElementById('applyAllCb').checked ? '1' : '';
+  ajax({
+    action:'bulk_update', csrf_token:CSRF,
+    'slot_ids[]': Array.from(selectedIds),
+    target_status: target,
+    apply_all: applyAll,
+    week_start: WEEK_START,
+    week_end: WEEK_END
+  });
+  toggleBulk();
+}
+
+/* ── Close on backdrop click ─────────────────────────── */
+document.querySelectorAll('.av-modal-bg').forEach(bg => {
+  bg.addEventListener('click', e => { if(e.target===bg) bg.classList.remove('open'); });
+});
+
+updateDayPicker();
+switchView('week');
+</script>
+            </main>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
